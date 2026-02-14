@@ -1,0 +1,121 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.4;
+}
+
+body {
+  margin: 0;
+  background: #f3f5f7;
+  color: #1c2530;
+}
+
+.app {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 1.25rem;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.subtitle {
+  margin-top: 0.35rem;
+  color: #516174;
+}
+
+.panel {
+  margin-top: 1rem;
+  background: #ffffff;
+  border: 1px solid #dde5ec;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+
+.panel h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.help-text {
+  margin: 0;
+  color: #516174;
+  font-size: 0.92rem;
+}
+
+.import-row {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.chat {
+  margin-top: 1rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #dde5ec;
+  padding: 1rem;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.message {
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  max-width: 75%;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: #0f6dff;
+  color: #fff;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background: #eef3f8;
+}
+
+.chat-form {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+
+.chat-form input {
+  border: 1px solid #c8d3df;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.chat-form button {
+  border: 0;
+  background: #0f6dff;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.topics li {
+  background: #dce9ff;
+  color: #12408a;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
