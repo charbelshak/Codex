@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Interior Rules Bot</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1 id="school-title">School Interior Rules Bot</h1>
+        <p class="subtitle">Ask questions about interior behavior rules.</p>
+      </header>
+
+      <section class="panel" aria-label="Rule import">
+        <h2>Load Rules from Excel</h2>
+        <p class="help-text">
+          Upload an <code>.xlsx</code>, <code>.xls</code>, or <code>.csv</code> file
+          with columns: <strong>title</strong>, <strong>keywords</strong>,
+          <strong>answer</strong>. Use comma-separated keywords.
+        </p>
+        <div class="import-row">
+          <input id="rules-file" type="file" accept=".xlsx,.xls,.csv" />
+          <a href="rules-template.csv" download>Download template (Excel-compatible CSV)</a>
+        </div>
+      </section>
+
+      <section id="chat" class="chat" aria-live="polite"></section>
+
+      <form id="chat-form" class="chat-form">
+        <input
+          id="question-input"
+          type="text"
+          placeholder="e.g. Can I run in the hallway?"
+          autocomplete="off"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+
+      <section>
+        <h2>Topics</h2>
+        <ul id="topics" class="topics"></ul>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
