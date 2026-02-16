@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>School Rules Chatbot</title>
+<script src="https://js.puter.com/v2/"></script>
+<style>
+body { font-family: Arial; max-width: 600px; margin: 20px auto; }
+#chat { border:1px solid #ccc; height:300px; overflow-y:auto; margin-bottom:10px; padding:5px; }
+.user { text-align: right; color: blue; margin:5px 0; }
+.bot { text-align: left; color: green; margin:5px 0; }
+input { width: 80%; padding:10px; }
+button { padding:10px; }
+</style>
+</head>
+<body>
+<h2>School Rules Chatbot</h2>
+<div id="chat"></div>
+<input id="msg" placeholder="Ask something..." />
+<button onclick="send()">Send</button>
+
+<script>
+let rulesText = "";
+
+// Load the Excel rules from FastAPI
+async function loadRules() {
+    try {
+        const res = await fetch("http://127.0.0.1:8000/rules");
+        const data = await res.json();
+        rulesText = data.rules;
+        console.log("Rules loaded:", rulesText);
+    } catch (err) {
+        console.error("Failed to load rules:", err);
+    }
+}
+loadRules();
+
+// Generate AI answer
+async function getAnswer(message) {
+    if (!rulesText) return "Rules not loaded yet.";
+
+    const prompt = `
+You are a friendly assistant chatbot. 
+- You can answer casual questions like a normal chatbot (greetings, small talk, etc.).
+- For any questions related to school rules, refer strictly to the following rules from the Excel file:
+${rulesText}
+
+Instructions:
+1. If the user asks in another language, translate the relevant rules into that language before answering.
+2. Answer the question strictly based on the rules.
+3. If the rules do not provide enough information, respond with:
+   "I don't have enough information in the rules to answer that question."
+4. If the question is casual (like 'hi', 'how are you', etc.), respond naturally.
+5. Never invent new school rules beyond what is in the Excel.
+   
+User asked: "${message}"
+`;
+
+    try {
+        const response = await puter.ai.chat(prompt, { model: "gpt-5-nano" });
+        return response;
+    } catch (err) {
+        console.error(err);
+        return "Error: Could not reach AI.";
+    }
+}
+
+// Send message
+async function send() {
+    const msgInput = document.getElementById("msg");
+    const chatDiv = document.getElementById("chat");
+    const message = msgInput.value.trim();
+    if (!message) return;
+    msgInput.value = "";
+
+    // Show user message
+    const userElem = document.createElement("div");
+    userElem.className = "user";
+    userElem.textContent = "You: " + message;
+    chatDiv.appendChild(userElem);
+
+    // Get AI answer
+    const answer = await getAnswer(message);
+    const botElem = document.createElement("div");
+    botElem.className = "bot";
+    botElem.textContent = "Bot: " + answer;
+    chatDiv.appendChild(botElem);
+
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+}
+
+// Enter key to send
+document.getElementById("msg").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") send();
+});
+</script>
+</body>
+</html>
